@@ -70,7 +70,7 @@ export default {
     },
     dingyue() {
       uni.requestSubscribeMessage({
-        tmplIds: ['9ODFxKcrCNDP7kLdgY8lRPtMpMEVCK9ihUuW6kWdnu0'],
+        tmplIds: ['9ODFxKcrCNDP7kLdgY8lRPtMpMEVCK9ihUuW6kWdnu0', 'FOhSugSZ11ebVdw0a89HDDHoZokg782SsH5I36Q70Rw'],
         success (res) {
           console.log(res)
         }
