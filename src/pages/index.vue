@@ -1,5 +1,17 @@
 <template>
   <view class="body">
+    <u-button
+        type="primary"
+        shape="circle"
+        text="订阅消息"
+        @click="dingyue"
+    ></u-button>
+    <u-button
+        type="primary"
+        shape="circle"
+        text="登录"
+        @click="dl"
+    ></u-button>
     <u-list>
       <u-list-item v-for="(item, index) in list" :key="index">
         <view class="celItem" @click="clickCel(item)">
@@ -7,6 +19,10 @@
         </view>
       </u-list-item>
     </u-list>
+
+    <u-toast ref="uToast"></u-toast>
+    <u-modal @confirm="show =false" :closeOnClickOverlay="true" :show="show" title="openID" :content='content'></u-modal>
+
   </view>
 </template>
 
@@ -14,6 +30,8 @@
 export default {
   data() {
     return {
+      show: false,
+      content: '',
       list: [
         { title: "记录", url: "/pages/info" },
         { title: "拍照", url: "/pages/photo" },
@@ -24,7 +42,40 @@ export default {
       finished: true,
     };
   },
+  onLoad() {
+  },
   methods: {
+    dl() {
+      uni.login({
+        provider: 'weixin', //使用微信登录
+        onlyAuthorize: true,
+        success: (loginRes)=> {
+          uni.request({
+            url: "https://api.lshbosheth.cn/api/utils/openID?code=" + loginRes.code,
+            method: "GET",
+            timeout: 6000,
+            success: (res) => {
+              console.log(res)
+              this.show = true
+              this.content = res.data.data
+              // this.$refs.uToast.show({
+              //   icon: false,
+              //   type: "success",
+              //   message: res.data.data
+              // });
+            }
+          });
+        }
+      });
+    },
+    dingyue() {
+      uni.requestSubscribeMessage({
+        tmplIds: ['9ODFxKcrCNDP7kLdgY8lRPtMpMEVCK9ihUuW6kWdnu0'],
+        success (res) {
+          console.log(res)
+        }
+      })
+    },
     clickCel(e) {
       uni.navigateTo({
         url: e.url,
