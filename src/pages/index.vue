@@ -21,7 +21,7 @@
     </u-list>
 
     <u-toast ref="uToast"></u-toast>
-    <u-modal @confirm="show =false" :closeOnClickOverlay="true" :show="show" title="openID" :content='content'></u-modal>
+    <u-modal showCancelButton @confirm="show =false" cancelText="复制" @cancel="copy" :closeOnClickOverlay="true" :show="show" title="openID" :content='content'></u-modal>
 
   </view>
 </template>
@@ -45,13 +45,19 @@ export default {
   onLoad() {
   },
   methods: {
+	  copy() {
+		  uni.setClipboardData({
+		    data: this.content
+		  });
+		  this.show = false
+	  },
     dl() {
       uni.login({
         provider: 'weixin', //使用微信登录
         onlyAuthorize: true,
         success: (loginRes)=> {
           uni.request({
-            url: "https://api.lshbosheth.cn/api/utils/openID?code=" + loginRes.code,
+            url: "https://api.lshbosheth.cn/api/wechat/openID?code=" + loginRes.code,
             method: "GET",
             timeout: 6000,
             success: (res) => {
