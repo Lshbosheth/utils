@@ -4,28 +4,16 @@
     <u--form
         labelPosition="left"
         :model="info"
-        :labelWidth="150"
+        :labelWidth="170"
         ref="uForm"
     >
       <u-form-item
-          label="日期"
-          prop="userInfo.name"
+          label="机械使用人"
+          prop="userInfo.parameter1"
           borderBottom
       >
         <u--input
-            v-model="info.date"
-            @focus="showCalendar = true"
-            border="none"
-        ></u--input>
-      </u-form-item>
-
-      <u-form-item
-          label="地点"
-          prop="userInfo.addr"
-          borderBottom
-      >
-        <u--input
-            v-model="info.addr"
+            v-model="info.parameter1"
             border="none"
         ></u--input>
       </u-form-item>
@@ -40,6 +28,42 @@
             border="none"
         ></u--input>
       </u-form-item>
+
+      <u-form-item
+          label="日期"
+          prop="userInfo.name"
+          borderBottom
+      >
+        <u--input
+            v-model="info.date"
+            @focus="showCalendar = true"
+            border="none"
+        ></u--input>
+      </u-form-item>
+
+      <u-form-item
+          label="施工时间"
+          prop="userInfo.time"
+          borderBottom
+      >
+        <u--input
+            v-model="info.time"
+            border="none"
+        ></u--input>
+      </u-form-item>
+
+      <u-form-item
+          label="地点及工作内容"
+          prop="userInfo.addr"
+          borderBottom
+      >
+        <u--input
+            v-model="info.addr"
+            border="none"
+        ></u--input>
+      </u-form-item>
+
+
 
       <u-form-item
           label="车型"
@@ -78,18 +102,20 @@
       </u-form-item>
 
       <u-form-item
-          label="施工时间"
-          prop="userInfo.addr"
+          label="开票情况"
+          prop="userInfo.parameter2"
           borderBottom
       >
         <u--input
-            v-model="info.time"
+            v-model="info.parameter2"
             border="none"
         ></u--input>
       </u-form-item>
 
+
+
       <u-form-item
-          label="施工内容"
+          label="备注"
           prop="userInfo.desc"
           borderBottom
       >
@@ -105,14 +131,16 @@
     </view>
 
     <view class="infoBox">
-      日期: {{info.date}}<br/>
-      地点: {{info.addr}}<br/>
+      机械使用人: {{info.parameter1}}<br/>
       用车人: {{info.personal}}<br/>
+      日期: {{info.date}}<br/>
+      施工时间: {{info.time}}<br/>
+      地点及工作内容: {{info.addr}}<br/>
       车型: {{info.type}}<br/>
       车号: {{info.carNo}}<br/>
       司机: {{info.driver}}<br/>
-      施工时间: {{info.time}}<br/>
-      施工内容: {{info.desc}}<br/>
+      开票情况: {{info.parameter2}}<br/>
+      备注: {{info.desc}}<br/>
     </view>
     <u-keyboard ref="uKeyboard" @change="valChange" @backspace="backspace"  mode="car" :show="showCarKeyboard" @cancel="showCarKeyboard = false"  @confirm="showCarKeyboard = false"></u-keyboard>
     <u-calendar :show="showCalendar" @close="showCalendar = false" @confirm="confirmCalendar"></u-calendar>
@@ -126,6 +154,8 @@ export default {
       showCalendar: false,
       showCarKeyboard: false,
       info: {
+        parameter2: '',
+        parameter1: '',
         date: dayjs(new Date()).format('YYYY年MM月DD日'),
         addr: '',
         personal: '',
@@ -157,7 +187,16 @@ export default {
         provider: "weixin",
         scene: "WXSceneSession",
         type: 1,
-        summary: `日期: ${this.info.date} \n地点: ${this.info.addr}\n用车人: ${this.info.personal} \n车型: ${this.info.type}\n车号: ${this.info.carNo}\n司机: ${this.info.driver}\n施工时间: ${this.info.time}\n施工内容: ${this.info.desc}`,
+        summary: `机械使用人: ${this.info.parameter1} \n
+		用车人: ${this.info.personal} \n
+        日期: ${this.info.date} \n
+		施工时间: ${this.info.time}\n
+        地点及工作内容: ${this.info.addr}\n
+        车型: ${this.info.type}\n
+        车号: ${this.info.carNo}\n
+        司机: ${this.info.driver}\n
+        开票情况: ${this.info.parameter2}\n
+        备注: ${this.info.desc}`,
         success: function (res) {
           console.log("success:" + JSON.stringify(res));
         },
@@ -175,7 +214,7 @@ export default {
     },
     copy() {
       uni.setClipboardData({
-        data: `日期: ${this.info.date} \n地点: ${this.info.addr}\n用车人: ${this.info.personal} \n车型: ${this.info.type}\n车号: ${this.info.carNo}\n施工时间: ${this.info.time}\n施工内容: ${this.info.desc}`
+        data:`机械使用人: ${this.info.parameter1} \n用车人: ${this.info.personal} \n日期: ${this.info.date} \n施工时间: ${this.info.time}\n地点及工作内容: ${this.info.addr}\n车型: ${this.info.type}\n车号: ${this.info.carNo}\n司机: ${this.info.driver}\n开票情况: ${this.info.parameter2}\n备注: ${this.info.desc}`
       });
     },
     confirmCalendar(e) {
