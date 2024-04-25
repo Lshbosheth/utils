@@ -37,6 +37,7 @@ export default {
         { title: "拍照", url: "/pages/photo" },
         { title: "表单", url: "/pages/test" },
         { title: "设置", url: "/pages/setting" },
+        { title: "排序", url: "/pages/sort" },
       ],
       loading: false,
       finished: true,

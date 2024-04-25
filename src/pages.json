@@ -1,47 +1,54 @@
 {
-	"easycom": {
-		"^u-(.*)": "uview-ui/components/u-$1/u-$1.vue"
-	},
-	"pages": [
-		//pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
-		{
-			"path": "pages/index",
-			"style": {
-				"navigationBarTitleText": "首页",
-				"navigationStyle": "custom"
-			}
-		},
-		{
-			"path": "pages/info",
-			"style": {
-				"navigationBarTitleText": "记录"
-			}
-		},
-		{
-			"path": "pages/photo",
-			"style": {
-				"navigationBarTitleText": "拍照"
-			}
-		},
-		{
-			"path": "pages/test",
-			"style": {
-				"navigationBarTitleText": "form",
-				"enablePullDownRefresh": true
-			}
-		},
-		{
-			"path": "pages/setting",
-			"style": {
-				"navigationBarTitleText": "setting",
-				"enablePullDownRefresh": true
-			}
-		}
-	],
-	"globalStyle": {
-		"navigationBarTextStyle": "black",
-		"navigationBarTitleText": "uni-app",
-		"navigationBarBackgroundColor": "#F8F8F8",
-		"backgroundColor": "#F8F8F8"
-	}
+  "easycom": {
+    "^u-(.*)": "uview-ui/components/u-$1/u-$1.vue"
+  },
+  "pages": [
+    //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+    {
+      "path": "pages/index",
+      "style": {
+        "navigationBarTitleText": "首页",
+        "navigationStyle": "custom"
+      }
+    },
+    {
+      "path": "pages/info",
+      "style": {
+        "navigationBarTitleText": "记录"
+      }
+    },
+    {
+      "path": "pages/photo",
+      "style": {
+        "navigationBarTitleText": "拍照"
+      }
+    },
+    {
+      "path": "pages/test",
+      "style": {
+        "navigationBarTitleText": "form",
+        "enablePullDownRefresh": true
+      }
+    },
+    {
+      "path": "pages/setting",
+      "style": {
+        "navigationBarTitleText": "setting",
+        "enablePullDownRefresh": true
+      }
+    },
+    {
+      "path": "pages/sort",
+      "style": {
+        "navigationBarTitleText": "排序",
+        "enablePullDownRefresh": false
+      }
+    }
+  ],
+  "globalStyle": {
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "uni-app",
+    "navigationBarBackgroundColor": "#F8F8F8",
+    "backgroundColor": "#F8F8F8"
+  }
 }

@@ -1,31 +1,18 @@
 <template>
   <view class="body">
-    <u--form labelPosition="left" :labelWidth="150" ref="uForm">
-      <u-form-item
-        v-for="(value, index) in infoList"
-        label="配置名"
-        prop="userInfo.configName"
-        borderBottom
-        ref="item1"
-      >
-        <u--input v-model="value.configName" border="none"></u--input>
-        <view
-          slot="right"
-          style="display: flex; width: 100rpx; justify-content: space-between"
-        >
-          <u-icon name="plus-circle" size="50" @click="addValue"></u-icon>
-          <u-icon
-            name="minus-circle"
-            size="50"
-            @click="delValue(index)"
-            v-if="index != 0"
-          ></u-icon>
-        </view>
-      </u-form-item>
-    </u--form>
+    <view>
+      <basic-drag v-model="infoList" :column="1" itemHeight="50px" itemKey="configName">
+        <template #item="{element}">
+          <view class="drag-item">{{ element.configName }}</view>
+        </template>
+      </basic-drag>
+      <view style="margin-top: 10px;">
+        拖拽后顺序：{{infoList.map(item=>item.configName).join('、')}}
+      </view>
+    </view>
+
     <view style="margin-top: 30rpx">
       <u-button
-        :disabled="isDisabled"
         type="primary"
         shape="circle"
         text="保存"
@@ -33,15 +20,18 @@
       ></u-button>
     </view>
     <u-toast ref="uToast"></u-toast>
+
   </view>
 </template>
 
 <script>
+import BasicDrag from '@/components/basic-drag/index.vue';
+import { onLoad } from '@dcloudio/uni-app';
 export default {
+  components: { BasicDrag },
   data() {
     return {
-      isDisabled: false,
-      infoList: [{ configName: "", configSort: 1 }],
+      infoList: []
     };
   },
   onLoad() {
@@ -58,14 +48,18 @@ export default {
   },
   methods: {
     confirm() {
-      this.isDisabled = true;
+      console.log(this.infoList)
+      const body = []
+      this.infoList.forEach((e, index) => {
+        e.configSort = index + 1
+        body.push(e)
+      })
       uni.request({
         url: "https://8kb7yj297854.vicp.fun/api/utils/updateConfig",
         method: "POST",
-        data: { infoList: this.infoList},
+        data: { infoList: body},
         timeout: 6000,
         success: (res) => {
-          this.isDisabled = false;
           this.$refs.uToast.show({
             icon: false,
             type: "success",
@@ -73,7 +67,6 @@ export default {
           });
         },
         fail: (err) => {
-          this.isDisabled = false;
           this.$refs.uToast.show({
             icon: false,
             type: "error",
@@ -83,24 +76,22 @@ export default {
         complete: () => {},
       });
     },
-    addValue() {
-      this.infoList.push({
-        configName: "",
-        configSort: this.infoList.length + 1
-      });
-    },
-    delValue(index) {
-      this.infoList.splice(index, 1);
-    },
-  },
+  }
 };
 </script>
 
 <style lang="scss" scoped>
+.list-title {
+  box-sizing: border-box;
+  padding-left: 20px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
 .body {
-  padding: 30rpx;
-  .inputCel {
-    display: flex;
-  }
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
 }
 </style>
