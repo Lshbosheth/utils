@@ -148,6 +148,8 @@
 </template>
 <script>
 import dayjs from 'dayjs'
+import { pinyin } from 'pinyin-pro';
+
 export default {
   data() {
     return {
@@ -175,13 +177,15 @@ export default {
       timeout: 6000,
       success: (res) => {
         this.infoList = res.data.data.info.split(',')
-        console.log(this.infoList);
       }
     });
   },
   mounted() {
   },
   methods: {
+    getKey(value) {
+      return pinyin(value, { toneType: 'none', type: 'num' }).replace(/\s*/g,"")
+    },
     share() {
       uni.share({
         provider: "weixin",
